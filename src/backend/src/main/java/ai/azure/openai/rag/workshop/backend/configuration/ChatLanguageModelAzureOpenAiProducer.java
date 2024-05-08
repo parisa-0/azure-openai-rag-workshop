@@ -25,6 +25,7 @@ public class ChatLanguageModelAzureOpenAiProducer {
 
   @Produces
   public ChatLanguageModel chatLanguageModel() {
+    // initialize chat model here
     AzureOpenAiChatModel model;
 
     try {
@@ -45,23 +46,19 @@ public class ChatLanguageModelAzureOpenAiProducer {
         .logRequestsAndResponses(true)
         .build();
     } catch (Exception e) {
-       // Default value for local execution
-    log.info("### Using fallback configuration for OpenAI");
-    model = AzureOpenAiChatModel.builder()
-      .apiKey("__dummy")
-      .endpoint(azureOpenAiEndpoint)
-      .deploymentName(azureOpenAiDeploymentName)
-      .timeout(ofSeconds(60))
-      .logRequestsAndResponses(true)
-      .build();
-  }
+      // Default value for local execution
+      log.info("### Using fallback configuration for OpenAI");
+      model = AzureOpenAiChatModel.builder()
+        .apiKey("__dummy")
+        .endpoint(azureOpenAiEndpoint)
+        .deploymentName(azureOpenAiDeploymentName)
+        .timeout(ofSeconds(60))
+        .logRequestsAndResponses(true)
+        .build();
+    }
 
-  log.info("### Producing ChatLanguageModel with AzureOpenAiChatModel");
+    log.info("### Producing ChatLanguageModel with AzureOpenAiChatModel");
 
-  return model;
-    
-
-   // return null;
+    return model;
   }
 }
-
